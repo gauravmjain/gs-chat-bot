@@ -7,6 +7,10 @@
 var app = require('../app');
 var debug = require('debug')('gs-chat-bot:server');
 var http = require('http');
+var socket = require('socket.io');
+var ioConfig = require("../config/socket");
+require("dotenv").config();
+
 
 /**
  * Get port from environment and store in Express.
@@ -20,6 +24,16 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
+
+
+/**
+ * Create Socket.io server.
+ */
+
+var io = new  socket.Server(server);
+ioConfig.onSocketIo(io);
+
+
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -86,5 +100,6 @@ function onListening() {
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
+  console.log('started on : ' + port)
   debug('Listening on ' + bind);
 }
