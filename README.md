@@ -12,7 +12,7 @@ This project is a chatbot that leverages the OpenAI API version 3.5 to generate 
    ```bash
      git clone https://github.com/gauravmjain/gs-chat-bot.git
    ```
-2. Using NPM for packages:
+2. Install project dependencies
    ```bash
      npm install
    ```
