@@ -3,31 +3,32 @@ let form = document.getElementById('form')
 let input = document.getElementById('input')
 let loading = document.getElementById("loader")
 let lock = true;
+
 form.addEventListener('submit', (e) => {
-e.preventDefault()
-if (input.value) {
-    socket.emit('send-message', input.value)
-    input.value = ''
-}
+    e.preventDefault()
+    if (input.value) {
+        socket.emit('private-message', input.value)
+        input.value = ''
+    }
 })
 
-socket.on('send-message', (msg) => {
-let item = document.createElement('li');
-if(lock){
-    input.disabled = true;
-    loading.innerHTML = loader();
-    lock = false;
-}else{
-    input.disabled = false;
-    loading.innerHTML = "";
-    lock = true;
-}
-// console.log(msg);
-msg = formatText(msg);
+socket.on('private-message', (msg) => {
+    // console.log(`message is ${socket.rooms}`)
+    let item = document.createElement('li');
+    if(lock){
+        input.disabled = true;
+        loading.innerHTML = loader();
+        lock = false;
+    }else{
+        input.disabled = false;
+        loading.innerHTML = "";
+        lock = true;
+    }
+    msg = formatText(msg);
 
-item.innerHTML = msg;
-messages.appendChild(item);
-window.scrollTo(0, document.body.scrollHeight);
+    item.innerHTML = msg;
+    messages.appendChild(item);
+    window.scrollTo(0, document.body.scrollHeight);
 });
 
 
